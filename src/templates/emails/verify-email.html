@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Verify Your Email — {{APP_NAME}}</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        background: #f4f5f7;
+        color: #333;
+        padding: 24px;
+      }
+
+      .wrapper {
+        max-width: 600px;
+        margin: 0 auto;
+        background: #fff;
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+      }
+
+      .header {
+        background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+        padding: 40px 32px;
+        text-align: center;
+      }
+
+      .header h1 {
+        color: #fff;
+        font-size: 30px;
+        font-weight: 700;
+        letter-spacing: -0.5px;
+      }
+
+      .header p {
+        color: rgba(255, 255, 255, 0.75);
+        margin-top: 8px;
+        font-size: 14px;
+      }
+
+      .content {
+        padding: 40px 32px;
+      }
+
+      .content h2 {
+        font-size: 24px;
+        font-weight: 700;
+        margin-bottom: 16px;
+        color: #1a1a2e;
+      }
+
+      .content p {
+        color: #555;
+        line-height: 1.7;
+        margin-bottom: 18px;
+        font-size: 15px;
+      }
+
+      .otp-box {
+        margin: 32px 0;
+        text-align: center;
+      }
+
+      .otp-code {
+        display: inline-block;
+        background: #f3f4f6;
+        border: 2px dashed #0ea5e9;
+        color: #111827;
+        font-size: 32px;
+        font-weight: 700;
+        letter-spacing: 10px;
+        padding: 18px 28px;
+        border-radius: 12px;
+      }
+
+      .otp-note {
+        margin-top: 12px;
+        font-size: 13px;
+        color: #888;
+      }
+
+      .divider {
+        border: none;
+        border-top: 1px solid #eee;
+        margin: 28px 0;
+      }
+
+      .footer {
+        background: #f9fafb;
+        padding: 24px 32px;
+        text-align: center;
+        border-top: 1px solid #eee;
+      }
+
+      .footer p {
+        font-size: 12px;
+        color: #999;
+        line-height: 1.7;
+      }
+
+      .footer a {
+        color: #0ea5e9;
+        text-decoration: none;
+      }
+
+      @media only screen and (max-width: 600px) {
+        body {
+          padding: 12px;
+        }
+
+        .header,
+        .content,
+        .footer {
+          padding: 24px 20px;
+        }
+
+        .otp-code {
+          font-size: 26px;
+          letter-spacing: 6px;
+          padding: 16px 20px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrapper">
+      <div class="header">
+        <h1>{{APP_NAME}}</h1>
+        <p>Your farming platform</p>
+      </div>
+
+      <div class="content">
+        <h2>Verify your email address</h2>
+
+        <p>Hi <strong>{{FIRST_NAME}}</strong>,</p>
+
+        <p>
+          Thanks for signing up for {{APP_NAME}}! Please use the verification code below to confirm
+          your email address and activate your account.
+        </p>
+
+        <div class="otp-box">
+          <div class="otp-code">{{OTP_CODE}}</div>
+          <p class="otp-note">This OTP will expire in <strong>24 hours</strong>.</p>
+        </div>
+
+        <hr class="divider" />
+
+        <p>
+          For security reasons, please do not share this OTP with anyone. Our team will never ask
+          you for your verification code.
+        </p>
+      </div>
+
+      <div class="footer">
+        <p>
+          If you did not create an account with {{APP_NAME}}, you can safely ignore this email.
+          <br />
+          Questions? <a href="mailto:{{SUPPORT_EMAIL}}">Contact Support</a> &nbsp;·&nbsp;
+          <a href="{{APP_URL}}">{{APP_NAME}}</a>
+        </p>
+
+        <p style="margin-top: 12px">© {{YEAR}} {{APP_NAME}}. All rights reserved.</p>
+      </div>
+    </div>
+  </body>
+</html>

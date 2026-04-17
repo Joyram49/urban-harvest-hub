@@ -1,11 +1,11 @@
-import { ApiError } from '@/interfaces/response.interface';
+import type { IApiError } from '@/interfaces/response.interface';
 
 export class AppError extends Error {
   public readonly statusCode: number;
   public readonly isOperational: boolean;
-  public readonly errors?: ApiError[];
+  public readonly errors?: IApiError[];
 
-  constructor(message: string, statusCode: number = 500, errors?: ApiError[]) {
+  constructor(message: string, statusCode: number = 500, errors?: IApiError[]) {
     super(message);
     this.statusCode = statusCode;
     this.isOperational = true;
@@ -20,7 +20,7 @@ export class AppError extends Error {
 // ─── HTTP Error Classes ────────────────────────────────────────────────────
 
 export class BadRequestError extends AppError {
-  constructor(message = 'Bad request', errors?: ApiError[]) {
+  constructor(message = 'Bad request', errors?: IApiError[]) {
     super(message, 400, errors);
   }
 }
@@ -50,7 +50,7 @@ export class ConflictError extends AppError {
 }
 
 export class ValidationError extends AppError {
-  constructor(message = 'Validation failed', errors?: ApiError[]) {
+  constructor(message = 'Validation failed', errors?: IApiError[]) {
     super(message, 422, errors);
   }
 }

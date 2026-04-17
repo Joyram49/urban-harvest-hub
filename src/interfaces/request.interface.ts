@@ -1,13 +1,13 @@
-import { Request } from 'express';
+import { type Request } from 'express';
 
 export type UserRole = 'ADMIN' | 'VENDOR' | 'CUSTOMER';
 
-export interface AuthenticatedUser {
+export interface IAuthenticatedUser {
   id: string;
   email: string;
   role: UserRole;
 }
 
-export interface AuthenticatedRequest extends Request {
-  user?: AuthenticatedUser;
+export interface IAuthenticatedRequest extends Request {
+  user?: IAuthenticatedUser;
 }

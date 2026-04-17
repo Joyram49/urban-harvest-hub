@@ -1,7 +1,9 @@
 import { Server as SocketIOServer } from 'socket.io';
-import { Server as HttpServer } from 'http';
+
 import { env } from '@/config/env';
 import { logger } from '@/config/logger';
+
+import type { Server as HttpServer } from 'http';
 
 let io: SocketIOServer | null = null;
 
@@ -20,13 +22,13 @@ export function initializeSocket(httpServer: HttpServer): SocketIOServer {
     logger.debug(`Socket connected: ${socket.id}`);
 
     // Join user-specific room (requires auth token - to be implemented)
-    socket.on('join:room', (roomId: string) => {
-      socket.join(roomId);
+    socket.on('join:room', async (roomId: string) => {
+      await socket.join(roomId);
       logger.debug(`Socket ${socket.id} joined room: ${roomId}`);
     });
 
-    socket.on('leave:room', (roomId: string) => {
-      socket.leave(roomId);
+    socket.on('leave:room', async (roomId: string) => {
+      await socket.leave(roomId);
       logger.debug(`Socket ${socket.id} left room: ${roomId}`);
     });
 
@@ -48,13 +50,13 @@ export function getIO(): SocketIOServer {
 
 // Emit helpers
 export const socketEmit = {
-  toUser: (userId: string, event: string, data: unknown) => {
+  toUser: (userId: string, event: string, data: unknown): void => {
     getIO().to(`user:${userId}`).emit(event, data);
   },
-  toRoom: (room: string, event: string, data: unknown) => {
+  toRoom: (room: string, event: string, data: unknown): void => {
     getIO().to(room).emit(event, data);
   },
-  broadcast: (event: string, data: unknown) => {
+  broadcast: (event: string, data: unknown): void => {
     getIO().emit(event, data);
   },
 };

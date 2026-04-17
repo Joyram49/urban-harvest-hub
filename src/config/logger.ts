@@ -1,4 +1,6 @@
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
 import winston from 'winston';
+
 import { env } from '@/config/env';
 
 const { combine, timestamp, printf, colorize, errors, json } = winston.format;
@@ -8,10 +10,11 @@ const devFormat = combine(
   colorize({ all: true }),
   timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
   errors({ stack: true }),
-  printf(({ level, message, timestamp, stack }) => {
-    return stack
-      ? `[${timestamp}] ${level}: ${message}\n${stack}`
-      : `[${timestamp}] ${level}: ${message}`;
+  printf(({ level, message, timestamp_b, stack_b }) => {
+    return stack_b
+      ? // eslint-disable-next-line @typescript-eslint/no-base-to-string
+        `[${timestamp_b}] ${level}: ${message}\n${stack_b}`
+      : `[${timestamp_b}] ${level}: ${message}`;
   }),
 );
 

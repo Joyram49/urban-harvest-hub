@@ -1,5 +1,6 @@
-import { Response } from 'express';
-import { ApiMeta, ApiResponse } from '@/interfaces/response.interface';
+import { type Response } from 'express';
+
+import { type IApiMeta, type IApiResponse } from '@/interfaces/response.interface';
 
 /**
  * Send a standardized success response
@@ -10,12 +11,12 @@ export function sendSuccess<T>(
     statusCode?: number;
     message: string;
     data?: T;
-    meta?: ApiMeta;
+    meta?: IApiMeta;
   },
 ): Response {
   const { statusCode = 200, message, data, meta } = options;
 
-  const response: ApiResponse<T> = {
+  const response: IApiResponse<T> = {
     success: true,
     statusCode,
     message,
@@ -39,7 +40,7 @@ export function sendError(
 ): Response {
   const { statusCode = 500, message, errors } = options;
 
-  const response: ApiResponse = {
+  const response: IApiResponse = {
     success: false,
     statusCode,
     message,
@@ -52,11 +53,19 @@ export function sendError(
 /**
  * Build pagination meta object
  */
-export function buildMeta(total: number, page: number, limit: number): ApiMeta {
+export function buildMeta(total: number, page: number, limit: number): IApiMeta {
   return {
     total,
     page,
     limit,
     totalPages: Math.ceil(total / limit),
   };
+}
+
+export function sendCreated<T>(res: Response, data: T, message = 'Created successfully'): Response {
+  return sendSuccess(res, { data, message, statusCode: 201 });
+}
+
+export function sendNoContent(res: Response): Response {
+  return res.status(204).send();
 }

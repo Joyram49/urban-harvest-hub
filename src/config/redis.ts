@@ -1,4 +1,5 @@
 import Redis from 'ioredis';
+
 import { env } from '@/config/env';
 import { logger } from '@/config/logger';
 

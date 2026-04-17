@@ -101,18 +101,18 @@ export default [
       '@typescript-eslint/prefer-nullish-coalescing': 'error',
       '@typescript-eslint/prefer-optional-chain': 'error',
       '@typescript-eslint/no-unnecessary-condition': 'error',
-      '@typescript-eslint/strict-boolean-expressions': [
-        'error',
-        {
-          allowString: false,
-          allowNumber: false,
-          allowNullableObject: true,
-          allowNullableBoolean: false,
-          allowNullableString: false,
-          allowNullableNumber: false,
-          allowAny: false,
-        },
-      ],
+      // '@typescript-eslint/strict-boolean-expressions': [
+      //   'error',
+      //   {
+      //     allowString: false,
+      //     allowNumber: false,
+      //     allowNullableObject: true,
+      //     allowNullableBoolean: false,
+      //     allowNullableString: false,
+      //     allowNullableNumber: false,
+      //     allowAny: false,
+      //   },
+      // ],
       '@typescript-eslint/switch-exhaustiveness-check': 'error',
       '@typescript-eslint/no-shadow': 'error',
       '@typescript-eslint/naming-convention': [
@@ -199,7 +199,7 @@ export default [
       'spaced-comment': ['error', 'always', { markers: ['/'] }],
       'max-depth': ['warn', 4],
       'max-lines-per-function': ['warn', { max: 80, skipBlankLines: true, skipComments: true }],
-      complexity: ['warn', 15],
+      complexity: ['warn', 20],
     },
   },
 

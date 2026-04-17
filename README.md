@@ -281,8 +281,8 @@ GET http://localhost:5000/health
 | 3   | PostgreSQL (Supabase)    | ✅ Done    |
 | 4   | Redis                    | ✅ Done    |
 | 5   | Express Server           | ✅ Done    |
-| 6   | Auth Module              | 🔜 Next    |
-| 7   | User Module              | ⏳ Pending |
+| 6   | Auth Module              | ✅ Done    |
+| 7   | User Module              | 🔜 Next    |
 | 8   | Vendor Module            | ⏳ Pending |
 | 9   | Farm Module              | ⏳ Pending |
 | 10  | Garden Space Module      | ⏳ Pending |

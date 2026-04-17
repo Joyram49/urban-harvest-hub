@@ -1,20 +1,20 @@
-export interface ApiMeta {
+export interface IApiMeta {
   total: number;
   page: number;
   limit: number;
   totalPages: number;
 }
 
-export interface ApiResponse<T = unknown> {
+export interface IApiResponse<T = unknown> {
   success: boolean;
   statusCode: number;
   message: string;
   data?: T;
-  meta?: ApiMeta;
-  errors?: ApiError[];
+  meta?: IApiMeta;
+  errors?: IApiError[];
 }
 
-export interface ApiError {
+export interface IApiError {
   field?: string;
   message: string;
 }

@@ -1,52 +1,53 @@
+import { PrismaPg } from '@prisma/adapter-pg';
 import { PrismaClient } from '@prisma/client';
-import { env } from '@/config/env';
-import { logger } from '@/config/logger';
+import { Pool } from 'pg';
+
+import { env } from './env';
+import { logger } from './logger';
 
 const globalForPrisma = globalThis as unknown as {
   prisma: PrismaClient | undefined;
 };
 
-export const prisma =
-  globalForPrisma.prisma ??
-  new PrismaClient({
-    log:
-      env.NODE_ENV === 'development'
-        ? [
-            { emit: 'event', level: 'query' },
-            { emit: 'event', level: 'error' },
-            { emit: 'event', level: 'warn' },
-          ]
-        : [{ emit: 'event', level: 'error' }],
-  });
-
-// Log slow queries in development
-if (env.NODE_ENV === 'development') {
-  prisma.$on('query', (e: { duration: number; query: any }) => {
-    if (e.duration > 500) {
-      logger.warn(`Slow query (${e.duration}ms): ${e.query}`);
-    }
-  });
-}
-
-prisma.$on('error', (e: { message: any }) => {
-  logger.error(`Prisma error: ${e.message}`);
+// Use stdout logging to avoid event typing incompatibilities
+const pool = new Pool({
+  connectionString: env.DATABASE_URL,
 });
 
+const adapter = new PrismaPg(pool);
+
+const prismaClient = new PrismaClient({
+  adapter,
+  log:
+    env.NODE_ENV === 'development'
+      ? [
+          { emit: 'stdout', level: 'query' },
+          { emit: 'stdout', level: 'error' },
+          { emit: 'stdout', level: 'warn' },
+        ]
+      : [{ emit: 'stdout', level: 'error' }],
+});
+
+export const prisma = globalForPrisma.prisma ?? prismaClient;
+
+// ── Prevent multiple instances in dev (Hot Reload fix) ─────────────
 if (env.NODE_ENV !== 'production') {
   globalForPrisma.prisma = prisma;
 }
 
+// ── Connect DB ────────────────────────────────────────────────────
 export async function connectDatabase(): Promise<void> {
   try {
     await prisma.$connect();
-    logger.info('✅ PostgreSQL connected via Prisma');
+    logger.info('✅ Database connected successfully');
   } catch (error) {
-    logger.error('❌ Failed to connect to PostgreSQL:', error);
+    logger.error('❌ Database connection failed:', error);
     process.exit(1);
   }
 }
 
+// ── Disconnect DB ─────────────────────────────────────────────────
 export async function disconnectDatabase(): Promise<void> {
   await prisma.$disconnect();
-  logger.info('PostgreSQL disconnected');
+  logger.info('Database disconnected');
 }
