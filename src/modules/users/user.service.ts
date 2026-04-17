@@ -12,7 +12,7 @@ import {
   type UpdateAvatarInput,
   type UpdateProfileInput,
   type UpdateUserStatusInput,
-} from '@/modules/user/user.types';
+} from '@/modules/users/user.types';
 import { getPaginationOptions } from '@/utils/pagination';
 import { buildMeta } from '@/utils/response.util';
 

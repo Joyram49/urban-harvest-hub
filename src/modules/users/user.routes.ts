@@ -2,14 +2,14 @@ import { Router } from 'express';
 
 import { validate } from '@/middlewares/validate.middleware';
 import { authenticate, isAdmin } from '@/modules/auth/auth.middleware';
-import * as userController from '@/modules/user/user.controller';
+import * as userController from '@/modules/users/user.controller';
 import {
   changePasswordSchema,
   getUsersQuerySchema,
   updateAvatarSchema,
   updateProfileSchema,
   updateUserStatusSchema,
-} from '@/modules/user/user.types';
+} from '@/modules/users/user.types';
 
 const router = Router();
 

@@ -1,14 +1,14 @@
 import { MESSAGES } from '@/constants/messages.constants';
 import { UnauthorizedError } from '@/errors/AppError';
 import { type IAuthenticatedRequest } from '@/interfaces/request.interface';
-import * as userService from '@/modules/user/user.service';
+import * as userService from '@/modules/users/user.service';
 import type {
   ChangePasswordInput,
   GetUsersQuery,
   UpdateAvatarInput,
   UpdateProfileInput,
   UpdateUserStatusInput,
-} from '@/modules/user/user.types';
+} from '@/modules/users/user.types';
 import { asyncHandler } from '@/utils/asyncHandler.util';
 import { sendSuccess } from '@/utils/response.util';
 
