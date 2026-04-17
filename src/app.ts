@@ -13,7 +13,7 @@ import { notFoundHandler } from '@/middlewares/notFound.middleware';
 import { apiLimiter } from '@/middlewares/rateLimiter.middleware';
 // ─── Module Routes (imported as they are built) ───────────────────────────────
 import authRoutes from '@/modules/auth/auth.routes';
-// import userRoutes from '@/modules/users/user.routes';
+import userRoutes from '@/modules/user/user.routes';
 // ... more routes will be added per module
 
 export function createApp(): Application {
@@ -75,7 +75,7 @@ export function createApp(): Application {
   // ─── API Routes ───────────────────────────────────────────────────────────
   // Routes will be mounted here as modules are built:
   app.use(`/api/${env.API_VERSION}/auth`, authRoutes);
-  // app.use(`/api/${env.API_VERSION}/users`, userRoutes);
+  app.use(`/api/${env.API_VERSION}/users`, userRoutes);
   // app.use(`/api/${env.API_VERSION}/vendors`, vendorRoutes);
   // app.use(`/api/${env.API_VERSION}/farms`, farmRoutes);
   // ...etc
