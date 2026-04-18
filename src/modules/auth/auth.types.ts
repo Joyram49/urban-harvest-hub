@@ -13,7 +13,7 @@ const passwordSchema = z
   .regex(/[0-9]/, 'Password must contain at least one number')
   .regex(/[^A-Za-z0-9]/, 'Password must contain at least one special character');
 
-const emailSchema = z.string().email('Invalid email address').toLowerCase().trim();
+const emailSchema = z.email('Invalid email address').toLowerCase().trim();
 
 // ─── Zod Schemas ─────────────────────────────────────────────────────────────
 
