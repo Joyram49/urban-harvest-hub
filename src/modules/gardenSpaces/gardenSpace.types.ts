@@ -58,7 +58,7 @@ export const listGardenSpacesQuerySchema = z.object({
     page: z.string().optional(),
     limit: z.string().optional(),
     farmId: z.string().trim().optional(),
-    status: z.nativeEnum(GardenSpaceStatus).optional(),
+    status: z.enum(GardenSpaceStatus).optional(),
     minPrice: z.coerce.number().positive().optional(),
     maxPrice: z.coerce.number().positive().optional(),
     minSize: z.coerce.number().positive().optional(),

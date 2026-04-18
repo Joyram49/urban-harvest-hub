@@ -1,7 +1,7 @@
 import { Router } from 'express';
 
-import { authenticate, isAdminOrVendor, isVendor } from '@/modules/auth/auth.middleware';
 import { validate } from '@/middlewares/validate.middleware';
+import { authenticate, isAdminOrVendor } from '@/modules/auth/auth.middleware';
 
 import * as gardenSpaceController from './gardenSpace.controller';
 import {

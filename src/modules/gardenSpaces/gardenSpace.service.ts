@@ -48,6 +48,23 @@ const gardenSpaceWithFarmSelect = {
   },
 } satisfies Prisma.GardenSpaceSelect;
 
+type GardenSpaceQueryRow = Prisma.GardenSpaceGetPayload<{
+  select: typeof gardenSpaceWithFarmSelect;
+}>;
+type GardenSpaceBasicRow = Prisma.GardenSpaceGetPayload<{
+  select: typeof gardenSpaceSelect;
+}>;
+
+/** Prisma returns `Decimal` for money fields; API responses use string (JSON-safe). */
+function toGardenSpaceResponse(
+  space: GardenSpaceQueryRow | GardenSpaceBasicRow,
+): IGardenSpaceResponse {
+  return {
+    ...space,
+    pricePerMonth: space.pricePerMonth.toString(),
+  };
+}
+
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
 /** Verify that a farm exists and belongs to the given vendorId */
@@ -96,7 +113,7 @@ export async function createGardenSpace(
     select: gardenSpaceWithFarmSelect,
   });
 
-  return space as IGardenSpaceResponse;
+  return toGardenSpaceResponse(space);
 }
 
 // ─── Get Garden Space By ID ───────────────────────────────────────────────────
@@ -109,7 +126,7 @@ export async function getGardenSpaceById(id: string): Promise<IGardenSpaceRespon
 
   if (!space) throw new NotFoundError('Garden space not found');
 
-  return space as IGardenSpaceResponse;
+  return toGardenSpaceResponse(space);
 }
 
 // ─── List Garden Spaces ───────────────────────────────────────────────────────
@@ -166,7 +183,7 @@ export async function listGardenSpaces(
     prisma.gardenSpace.count({ where }),
   ]);
 
-  return { spaces: spaces as IGardenSpaceResponse[], total };
+  return { spaces: spaces.map(toGardenSpaceResponse), total };
 }
 
 // ─── Update Garden Space ──────────────────────────────────────────────────────
@@ -199,7 +216,7 @@ export async function updateGardenSpace(
     select: gardenSpaceWithFarmSelect,
   });
 
-  return space as IGardenSpaceResponse;
+  return toGardenSpaceResponse(space);
 }
 
 // ─── Delete Garden Space ──────────────────────────────────────────────────────
@@ -246,5 +263,5 @@ export async function getSpacesByFarm(
     prisma.gardenSpace.count({ where: { farmId } }),
   ]);
 
-  return { spaces: spaces as IGardenSpaceResponse[], total };
+  return { spaces: spaces.map(toGardenSpaceResponse), total };
 }
