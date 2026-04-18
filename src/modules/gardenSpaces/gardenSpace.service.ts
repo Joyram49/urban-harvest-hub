@@ -2,7 +2,7 @@ import { GardenSpaceStatus, type Prisma } from '@prisma/client';
 
 import { prisma } from '@/config/prisma';
 import { BadRequestError, ForbiddenError, NotFoundError } from '@/errors/AppError';
-import { type PaginationOptions } from '@/utils/pagination';
+import { type IPaginationOptions } from '@/utils/pagination';
 
 import {
   type CreateGardenSpaceInput,
@@ -133,7 +133,7 @@ export async function getGardenSpaceById(id: string): Promise<IGardenSpaceRespon
 
 export async function listGardenSpaces(
   query: ListGardenSpacesQuery,
-  pagination: PaginationOptions,
+  pagination: IPaginationOptions,
 ): Promise<{ spaces: IGardenSpaceResponse[]; total: number }> {
   const where: Prisma.GardenSpaceWhereInput = {};
 
@@ -246,7 +246,7 @@ export async function deleteGardenSpace(id: string, vendorId: string): Promise<v
 
 export async function getSpacesByFarm(
   farmId: string,
-  pagination: PaginationOptions,
+  pagination: IPaginationOptions,
 ): Promise<{ spaces: IGardenSpaceResponse[]; total: number }> {
   // Verify farm exists
   const farm = await prisma.farm.findUnique({ where: { id: farmId }, select: { id: true } });

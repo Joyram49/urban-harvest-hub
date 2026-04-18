@@ -5,7 +5,6 @@ import prettierConfig from 'eslint-config-prettier';
 import importPlugin from 'eslint-plugin-import';
 import securityPlugin from 'eslint-plugin-security';
 
-/** @type {import('eslint').Linter.FlatConfig[]} */
 export default [
   // ─── Global Ignores ───────────────────────────────────────────────
   {

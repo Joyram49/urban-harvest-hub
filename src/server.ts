@@ -1,10 +1,13 @@
 import http from 'http';
-import { createApp } from './app';
+
 import { env } from '@/config/env';
 import { logger } from '@/config/logger';
 import { connectDatabase, disconnectDatabase } from '@/config/prisma';
 import { connectRedis, disconnectRedis } from '@/config/redis';
 import { initializeSocket } from '@/config/socket';
+import { lifecycle } from '@/core/lifecycle';
+
+import { createApp } from './app';
 
 async function bootstrap(): Promise<void> {
   try {
@@ -28,32 +31,28 @@ async function bootstrap(): Promise<void> {
     });
 
     // ─── Graceful Shutdown ─────────────────────────────────────────────────
-    const shutdown = async (signal: string): Promise<void> => {
-      logger.info(`\n${signal} received – shutting down gracefully...`);
+    lifecycle.register({
+      name: 'database',
+      fn: disconnectDatabase,
+    });
 
-      httpServer.close(async () => {
-        logger.info('HTTP server closed');
+    lifecycle.register({
+      name: 'redis',
+      fn: disconnectRedis,
+    });
 
-        try {
-          await disconnectDatabase();
-          await disconnectRedis();
-          logger.info('All connections closed. Goodbye 👋');
-          process.exit(0);
-        } catch (err) {
-          logger.error('Error during shutdown:', err);
-          process.exit(1);
-        }
-      });
+    lifecycle.register({
+      name: 'http',
+      fn: () =>
+        new Promise((resolve) => {
+          httpServer.close(() => {
+            logger.info('HTTP server closed');
+            resolve();
+          });
+        }),
+    });
 
-      // Force shutdown after 10 seconds
-      setTimeout(() => {
-        logger.error('Forced shutdown after timeout');
-        process.exit(1);
-      }, 10_000);
-    };
-
-    process.on('SIGTERM', () => shutdown('SIGTERM'));
-    process.on('SIGINT', () => shutdown('SIGINT'));
+    lifecycle.initSignals();
   } catch (error) {
     logger.error('Failed to start server:', error);
     process.exit(1);
@@ -71,4 +70,4 @@ process.on('uncaughtException', (error: Error) => {
   process.exit(1);
 });
 
-bootstrap();
+void bootstrap();

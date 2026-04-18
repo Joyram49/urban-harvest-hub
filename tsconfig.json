@@ -33,7 +33,9 @@
         "@/constants/*": ["./constants/*"],
         "@/interfaces/*": ["./interfaces/*"],
         "@/errors/*": ["./errors/*"],
-        "@/routes/*": ["./routes/*"]
+        "@/routes/*": ["./routes/*"],
+        "@/core/*": ["./core/*"]
+
       }
     },
     "include": ["src/**/*"],

@@ -2,7 +2,7 @@ import { type Prisma } from '@prisma/client';
 
 import { prisma } from '@/config/prisma';
 import { ForbiddenError, NotFoundError } from '@/errors/AppError';
-import { type PaginationOptions } from '@/utils/pagination';
+import { type IPaginationOptions } from '@/utils/pagination';
 
 import {
   type CreateFarmInput,
@@ -80,7 +80,7 @@ export async function getFarmById(id: string): Promise<IFarmResponse> {
 
 export async function listFarms(
   query: ListFarmsQuery,
-  pagination: PaginationOptions,
+  pagination: IPaginationOptions,
 ): Promise<{ farms: IFarmResponse[]; total: number }> {
   const where: Prisma.FarmWhereInput = {};
 
@@ -176,7 +176,7 @@ export async function deleteFarm(id: string, vendorId: string): Promise<void> {
 
 export async function getFarmsByVendor(
   vendorId: string,
-  pagination: PaginationOptions,
+  pagination: IPaginationOptions,
 ): Promise<{ farms: IFarmResponse[]; total: number }> {
   const [farms, total] = await prisma.$transaction([
     prisma.farm.findMany({

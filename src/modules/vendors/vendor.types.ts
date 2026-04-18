@@ -20,7 +20,7 @@ export const createVendorSchema = z.object({
     state: z.string().trim().max(100).optional(),
     country: z.string().trim().min(2, 'Country must be at least 2 characters').max(100),
     postalCode: z.string().trim().max(20).optional(),
-    website: z.string().trim().url('Website must be a valid URL').optional(),
+    website: z.url('Website must be a valid URL').optional(),
     socialLinks: z
       .object({
         facebook: z.url().optional(),

@@ -1,3 +1,4 @@
+import { logger } from '@/config/logger';
 import { MESSAGES } from '@/constants/messages.constants';
 import { UnauthorizedError } from '@/errors/AppError';
 import { type IAuthenticatedRequest } from '@/interfaces/request.interface';
@@ -85,6 +86,8 @@ export const createVendor = asyncHandler(async (req: IAuthenticatedRequest, res:
 export const getMyVendorProfile = asyncHandler(
   async (req: IAuthenticatedRequest, res: Response) => {
     if (!req.user) throw new UnauthorizedError();
+
+    logger.info({ user: req.user });
     const vendor = await vendorService.getMyVendorProfile(req.user.id);
     sendSuccess(res, { message: MESSAGES.VENDOR.FETCHED, data: vendor });
   },
