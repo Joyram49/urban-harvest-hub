@@ -13,6 +13,16 @@ import { notFoundHandler } from '@/middlewares/notFound.middleware';
 import { apiLimiter } from '@/middlewares/rateLimiter.middleware';
 // ─── Module Routes (imported as they are built) ───────────────────────────────
 import authRoutes from '@/modules/auth/auth.routes';
+import bookingRoutes from '@/modules/bookings/booking.routes';
+import cartRoutes from '@/modules/cart/cart.routes';
+import certificationRoutes from '@/modules/certifications/certification.routes';
+import farmRoutes from '@/modules/farms/farm.routes';
+import forumRoutes from '@/modules/forum/forum.routes';
+import gardenSpaceRoutes from '@/modules/gardenSpaces/gardenSpace.routes';
+import notificationRoutes from '@/modules/notifications/notification.routes';
+import orderRoutes from '@/modules/orders/order.routes';
+import plantTrackingRoutes from '@/modules/plantTracking/plantTracking.routes';
+import productRoutes from '@/modules/products/product.routes';
 import userRoutes from '@/modules/users/user.routes';
 import vendorRoutes from '@/modules/vendors/vendor.routes';
 // ... more routes will be added per module
@@ -78,8 +88,16 @@ export function createApp(): Application {
   app.use(`/api/${env.API_VERSION}/auth`, authRoutes);
   app.use(`/api/${env.API_VERSION}/users`, userRoutes);
   app.use(`/api/${env.API_VERSION}/vendors`, vendorRoutes);
-  // app.use(`/api/${env.API_VERSION}/farms`, farmRoutes);
-  // ...etc
+  app.use(`/api/${env.API_VERSION}/notifications`, notificationRoutes);
+  app.use(`/api/${env.API_VERSION}/farms`, farmRoutes);
+  app.use(`/api/${env.API_VERSION}/garden-spaces`, gardenSpaceRoutes);
+  app.use(`/api/${env.API_VERSION}/plant-tracking`, plantTrackingRoutes);
+  app.use(`/api/${env.API_VERSION}/products`, productRoutes);
+  app.use(`/api/${env.API_VERSION}/cart`, cartRoutes);
+  app.use(`/api/${env.API_VERSION}/orders`, orderRoutes);
+  app.use(`/api/${env.API_VERSION}/bookings`, bookingRoutes);
+  app.use(`/api/${env.API_VERSION}/forum`, forumRoutes);
+  app.use(`/api/${env.API_VERSION}/certificate`, certificationRoutes);
 
   // ─── 404 Handler ─────────────────────────────────────────────────────────
   app.use(notFoundHandler);
